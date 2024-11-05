@@ -40,7 +40,12 @@ public class EmployeesFile
         public EmployeeCsvRepresentation(string content)
         {
             _content = content;
-            _tokens = content.Split(", ");
+            var tokens = content.Split(", ");
+            if (tokens.Length != 4)
+            {
+                throw new CannotReadEmployeesException("missing columns");
+            }
+            _tokens = tokens;
         }
 
         public Employee ConvertToEmployee()

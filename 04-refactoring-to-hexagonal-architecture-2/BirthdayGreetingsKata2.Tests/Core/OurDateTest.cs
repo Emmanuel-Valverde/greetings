@@ -8,10 +8,10 @@ public class OurDateTest
     [Test]
     public void Identifies_If_Two_Dates_Were_In_The_Same_Day()
     {
-        var ourDate = OurDateFromString("1789/01/24");
-        var sameDay = OurDateFromString("2001/01/24");
-        var notSameDay = OurDateFromString("1789/01/25");
-        var notSameMonth = OurDateFromString("1789/02/25");
+        var ourDate = OurDate("1789/01/24");
+        var sameDay = OurDate("2001/01/24");
+        var notSameDay = OurDate("1789/01/25");
+        var notSameMonth = OurDate("1789/02/25");
 
         Assert.That(ourDate.IsSameDay(sameDay), Is.True, "same");
         Assert.That(ourDate.IsSameDay(notSameDay), Is.False, "not same day");

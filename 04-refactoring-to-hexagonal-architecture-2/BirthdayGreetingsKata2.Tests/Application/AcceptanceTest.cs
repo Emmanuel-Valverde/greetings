@@ -43,7 +43,7 @@ public class AcceptanceTest
     [Test]
     public void Base_Scenario()
     {
-        var today = OurDateFromString("2008/10/08");
+        var today = OurDate("2008/10/08");
 
         _service.SendGreetings(today, SmtpHost, SmtpPort, From);
 
@@ -58,7 +58,7 @@ public class AcceptanceTest
     [Test]
     public void Will_Not_Send_Emails_When_Nobodies_Birthday()
     {
-        var today = OurDateFromString("2008/01/01");
+        var today = OurDate("2008/01/01");
 
         _service.SendGreetings(today, SmtpHost, SmtpPort, From);
 
