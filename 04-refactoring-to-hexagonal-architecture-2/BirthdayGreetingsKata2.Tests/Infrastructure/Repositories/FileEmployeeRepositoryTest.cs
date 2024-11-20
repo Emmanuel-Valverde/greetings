@@ -1,7 +1,6 @@
 using BirthdayGreetingsKata2.Core;
 using BirthdayGreetingsKata2.Infrastructure.Repositories;
 using NUnit.Framework;
-using static BirthdayGreetingsKata2.Tests.helpers.OurDateFactory;
 
 
 namespace BirthdayGreetingsKata2.Tests.Infrastructure.Repositories;
