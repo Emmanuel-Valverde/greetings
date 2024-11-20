@@ -6,7 +6,6 @@ public class OurDate
 {
     private readonly DateTime _date;
 
-
     public OurDate(string yyyyMMdd)
     {
         _date = DateTime.ParseExact(yyyyMMdd, "yyyy/MM/dd", null);

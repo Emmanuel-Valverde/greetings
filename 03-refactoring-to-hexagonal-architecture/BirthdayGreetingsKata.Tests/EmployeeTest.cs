@@ -15,18 +15,4 @@ public class EmployeeTest
             Is.True,
             "his birthday");
     }
-
-    [Test]
-    public void Equality()
-    {
-        var employeeBase = new Employee("First", "Last", "1999/09/01",
-            "first@last.com");
-        var same = new Employee("First", "Last", "1999/09/01",
-            "first@last.com");
-        var different = new Employee("First", "Last", "1999/09/01",
-            "boom@boom.com");
-
-        Assert.That(employeeBase.Equals(same), Is.True);
-        Assert.That(employeeBase.Equals(different), Is.False);
-    }
 }

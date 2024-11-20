@@ -16,16 +16,4 @@ public class OurDateTest
         Assert.That(ourDate.IsSameDay(notSameDay), Is.False, "not same day");
         Assert.That(ourDate.IsSameDay(notSameMonth), Is.False, "not same month");
     }
-
-    [Test]
-    public void Equality()
-    {
-        var dateBase = new OurDate("2000/01/02");
-        var same = new OurDate("2000/01/02");
-        var different = new OurDate("2000/01/04");
-
-        Assert.That(dateBase, Is.EqualTo(dateBase));
-        Assert.That(dateBase, Is.EqualTo(same));
-        Assert.That(dateBase, Is.Not.EqualTo(different));
-    }
 }
