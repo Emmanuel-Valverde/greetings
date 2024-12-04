@@ -10,8 +10,8 @@ public class BirthdayService
     private readonly SmtpClientWrapper _smtpClientWrapper;
 
     const string BodyTemplate = "Happy Birthday, dear %NAME%!";
-    const string Subject = "Happy Birthday!";
-    const string Sender = "sender@here.com";
+    
+    
 
     public BirthdayService(IEmployeeRepository employeeRepository, SmtpClientWrapper smtpClientWrapper)
     {
@@ -26,23 +26,17 @@ public class BirthdayService
         {
             if (employee.IsBirthday(ourDate))
             {
-                var (recipient, body) = SmtpClientWrapper.ComposeMessage(employee, BodyTemplate);
-                SendMessage(body, recipient);
+                var recipient = employee.Email;
+                var body = BodyTemplate.Replace("%NAME%",
+                    employee.FirstName);
+                _smtpClientWrapper.SendMessage(body, recipient);
             }
         }
     }
 
-    private void SendMessage(string body, string recipient)
-    {
-        var msg = SmtpClientWrapper.GetMessage(Sender, Subject, body, recipient);
-
-        // Send the message
-        SendMessage(msg, _smtpClientWrapper.SmtpClient);
-    }
-
     // made protected for testing :-(
-    protected virtual void SendMessage(MailMessage msg, SmtpClient smtpClient)
+    protected virtual void SendMessage(MailMessage msg)
     {
-        smtpClient.Send(msg);
+        _smtpClientWrapper.SmtpClient.Send(msg);
     }
 }

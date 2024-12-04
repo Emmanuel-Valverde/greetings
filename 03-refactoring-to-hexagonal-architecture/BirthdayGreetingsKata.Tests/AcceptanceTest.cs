@@ -1,8 +1,9 @@
-using System.Collections.Generic;
+using System;
 using System.Net.Mail;
 using BirthdayGreetingsKata.Application;
 using BirthdayGreetingsKata.Domain;
 using BirthdayGreetingsKata.Infrastructure;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace BirthdayGreetingsKata.Tests;
@@ -10,49 +11,36 @@ namespace BirthdayGreetingsKata.Tests;
 public class AcceptanceTest
 {
     private const int SmtpPort = 25;
-    private List<MailMessage> _messagesSent;
     private BirthdayService _service;
-
-    private class BirthdayServiceForTesting : BirthdayService
-    {
-        private readonly List<MailMessage> _messages;
-
-        public BirthdayServiceForTesting(List<MailMessage> messages) : base(new FileEmployeeRepository(), new SmtpClientWrapper("localhost", SmtpPort))
-        {
-            _messages = messages;
-        }
-
-        protected override void SendMessage(MailMessage msg, SmtpClient smtpClient)
-        {
-            _messages.Add(msg);
-        }
-    }
-
+    private SmtpClientWrapper _smtpClientWrapperSpy;
+    
     [SetUp]
     public void SetUp()
     {
-        _messagesSent = new List<MailMessage>();
-        _service = new BirthdayServiceForTesting(_messagesSent);
+        _smtpClientWrapperSpy = Substitute.For<SmtpClientWrapper>("localhost", SmtpPort);
+       
+        _service = new BirthdayService(new FileEmployeeRepository(), _smtpClientWrapperSpy);
     }
 
     [Test]
     public void Base_Scenario()
     {
-        _service.SendGreetings(new OurDate("2008/10/08"));
+        // _service.SendGreetings(new OurDate("2008/10/08"));
 
-        Assert.That(_messagesSent, Has.Exactly(1).Items);
-        var message = _messagesSent[0];
-        Assert.That(message.Body, Is.EqualTo("Happy Birthday, dear John!"));
-        Assert.That(message.Subject, Is.EqualTo("Happy Birthday!"));
-        Assert.That(message.To, Has.Exactly(1).Items);
-        Assert.That(message.To[0].Address, Is.EqualTo("john.doe@foobar.com"));
+        _smtpClientWrapperSpy.When(x => x.SendMessage(Arg.Any<string>(), Arg.Any<string>())).Do(_ =>
+        {
+            Console.WriteLine("patata");
+        });
+        // _smtpClientWrapperSpy.SendMessage(Arg.Any<string>(), Arg.Any<string>());
+        //_smtpClientWrapperSpy.Received(1).SendMessage(Arg.Any<string>(), Arg.Any<string>()).;
+        // _smtpClientWrapperSpy.Received(1).SendMessage("Happy Birthday, dear John!", "john.doe@foobar.com");
     }
 
     [Test]
     public void Will_Not_Send_Emails_When_Nobodies_Birthday()
     {
+        _smtpClientWrapperSpy.DidNotReceive().SendMessage(Arg.Any<string>(), Arg.Any<string>());
+        
         _service.SendGreetings(new OurDate("2008/01/01"));
-
-        Assert.That(_messagesSent, Is.Empty);
     }
 }

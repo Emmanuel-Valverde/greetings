@@ -1,12 +1,14 @@
 using System.Net.Mail;
 using BirthdayGreetingsKata.Application;
-using BirthdayGreetingsKata.Domain;
 
 namespace BirthdayGreetingsKata.Infrastructure;
 
 public class SmtpClientWrapper : IMessageSender
 {
     public SmtpClient SmtpClient { get; }
+    const string Sender = "sender@here.com";
+    const string Subject = "Happy Birthday!";
+    
     public SmtpClientWrapper (string smtpHost, int smtpPort)
     {
         // Create a mail session
@@ -16,24 +18,16 @@ public class SmtpClientWrapper : IMessageSender
         };
     }
 
-    public static MailMessage GetMessage(string sender, string subject, string body, string recipient)
+    public void SendMessage(string body, string recipient)
     {
         // Construct the message
         var msg = new MailMessage
         {
-            From = new MailAddress(sender),
-            Subject = subject,
+            From = new MailAddress(Sender),
+            Subject = Subject,
             Body = body
         };
         msg.To.Add(recipient);
-        return msg;
-    }
-
-    public static (string, string) ComposeMessage(Employee employee, string bodyTemplate)
-    {
-        var recipient = employee.Email;
-        var body = bodyTemplate.Replace("%NAME%",
-            employee.FirstName);
-        return (recipient, body);
+        SmtpClient.Send(msg);
     }
 }
