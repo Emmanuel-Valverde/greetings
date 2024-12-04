@@ -32,8 +32,7 @@ public class AcceptanceTest
     [Test]
     public void Will_Not_Send_Emails_When_Nobodies_Birthday()
     {
-        _smtpClientWrapperSpy.DidNotReceive().SendMessage(Arg.Any<string>(), Arg.Any<string>());
-        
         _service.SendGreetings(new OurDate("2008/01/01"));
+        _smtpClientWrapperSpy.DidNotReceive().SendMessage(Arg.Any<string>(), Arg.Any<string>());
     }
 }

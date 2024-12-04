@@ -33,10 +33,4 @@ public class BirthdayService
             }
         }
     }
-
-    // made protected for testing :-(
-    protected virtual void SendMessage(MailMessage msg)
-    {
-        _smtpClientWrapper.SmtpClient.Send(msg);
-    }
 }
