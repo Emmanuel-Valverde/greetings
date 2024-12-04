@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using System.Net.Mail;
+using BirthdayGreetingsKata.Application;
+using BirthdayGreetingsKata.Domain;
+using BirthdayGreetingsKata.Infrastructure;
 using NUnit.Framework;
 
 namespace BirthdayGreetingsKata.Tests;
@@ -14,7 +17,7 @@ public class AcceptanceTest
     {
         private readonly List<MailMessage> _messages;
 
-        public BirthdayServiceForTesting(List<MailMessage> messages)
+        public BirthdayServiceForTesting(List<MailMessage> messages) : base(new FileEmployeeRepository(), new SmtpClientWrapper("localhost", SmtpPort))
         {
             _messages = messages;
         }
@@ -35,7 +38,7 @@ public class AcceptanceTest
     [Test]
     public void Base_Scenario()
     {
-        _service.SendGreetings(new OurDate("2008/10/08"), "localhost", SmtpPort, new FileEmployeeRepository());
+        _service.SendGreetings(new OurDate("2008/10/08"));
 
         Assert.That(_messagesSent, Has.Exactly(1).Items);
         var message = _messagesSent[0];
@@ -48,7 +51,7 @@ public class AcceptanceTest
     [Test]
     public void Will_Not_Send_Emails_When_Nobodies_Birthday()
     {
-        _service.SendGreetings(new OurDate("2008/01/01"), "localhost", SmtpPort, new FileEmployeeRepository());
+        _service.SendGreetings(new OurDate("2008/01/01"));
 
         Assert.That(_messagesSent, Is.Empty);
     }

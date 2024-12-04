@@ -1,6 +1,6 @@
 using System;
 
-namespace BirthdayGreetingsKata;
+namespace BirthdayGreetingsKata.Domain;
 
 public class Employee
 {

@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using BirthdayGreetingsKata.Application;
+using BirthdayGreetingsKata.Domain;
 
-namespace BirthdayGreetingsKata;
-
+namespace BirthdayGreetingsKata.Infrastructure;
 
 public class FileEmployeeRepository : IEmployeeRepository
 {

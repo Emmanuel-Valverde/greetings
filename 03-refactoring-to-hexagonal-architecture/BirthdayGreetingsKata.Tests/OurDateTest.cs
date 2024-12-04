@@ -1,3 +1,4 @@
+using BirthdayGreetingsKata.Domain;
 using NUnit.Framework;
 
 namespace BirthdayGreetingsKata.Tests;
