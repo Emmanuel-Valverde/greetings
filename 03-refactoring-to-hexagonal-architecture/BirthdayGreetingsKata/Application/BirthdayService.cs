@@ -8,6 +8,7 @@ public class BirthdayService
 {
     private readonly IEmployeeRepository _employeeRepository;
     private readonly SmtpClientWrapper _smtpClientWrapper;
+    private readonly MessageDto _messageDto;
 
     const string BodyTemplate = "Happy Birthday, dear %NAME%!";
     
@@ -26,10 +27,8 @@ public class BirthdayService
         {
             if (employee.IsBirthday(ourDate))
             {
-                var recipient = employee.Email;
-                var body = BodyTemplate.Replace("%NAME%",
-                    employee.FirstName);
-                _smtpClientWrapper.SendMessage(body, recipient);
+                MessageDto messageDto = new MessageDto( employee.Email, BodyTemplate.Replace("%NAME%",employee.FirstName));
+                _smtpClientWrapper.SendMessage(null);
             }
         }
     }

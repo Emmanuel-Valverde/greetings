@@ -18,16 +18,16 @@ public class SmtpClientWrapper : IMessageSender
         };
     }
 
-    public virtual void SendMessage(string body, string recipient)
+    public virtual void SendMessage(MessageDto messageDto)
     {
         // Construct the message
         var msg = new MailMessage
         {
             From = new MailAddress(Sender),
             Subject = Subject,
-            Body = body
+            Body = messageDto.To
         };
-        msg.To.Add(recipient);
+        msg.To.Add(messageDto.What);
         SmtpClient.Send(msg);
     }
 }

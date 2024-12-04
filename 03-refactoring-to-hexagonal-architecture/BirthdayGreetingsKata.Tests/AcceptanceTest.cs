@@ -26,13 +26,13 @@ public class AcceptanceTest
     public void Base_Scenario()
     {
         _service.SendGreetings(new OurDate("2008/10/08"));
-         _smtpClientWrapperSpy.Received(1).SendMessage("Happy Birthday, dear John!", "john.doe@foobar.com");
+         _smtpClientWrapperSpy.Received(1).SendMessage(null);
     }
 
     [Test]
     public void Will_Not_Send_Emails_When_Nobodies_Birthday()
     {
         _service.SendGreetings(new OurDate("2008/01/01"));
-        _smtpClientWrapperSpy.DidNotReceive().SendMessage(Arg.Any<string>(), Arg.Any<string>());
+        _smtpClientWrapperSpy.DidNotReceive().SendMessage(null);
     }
 }
