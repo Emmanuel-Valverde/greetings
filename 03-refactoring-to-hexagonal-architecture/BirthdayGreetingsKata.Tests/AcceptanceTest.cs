@@ -35,8 +35,7 @@ public class AcceptanceTest
     [Test]
     public void Base_Scenario()
     {
-        _service.SendGreetings("employee_data.txt",
-            new OurDate("2008/10/08"), "localhost", SmtpPort);
+        _service.SendGreetings(new OurDate("2008/10/08"), "localhost", SmtpPort, new FileEmployeeRepository());
 
         Assert.That(_messagesSent, Has.Exactly(1).Items);
         var message = _messagesSent[0];
@@ -49,8 +48,7 @@ public class AcceptanceTest
     [Test]
     public void Will_Not_Send_Emails_When_Nobodies_Birthday()
     {
-        _service.SendGreetings("employee_data.txt",
-            new OurDate("2008/01/01"), "localhost", SmtpPort);
+        _service.SendGreetings(new OurDate("2008/01/01"), "localhost", SmtpPort, new FileEmployeeRepository());
 
         Assert.That(_messagesSent, Is.Empty);
     }
