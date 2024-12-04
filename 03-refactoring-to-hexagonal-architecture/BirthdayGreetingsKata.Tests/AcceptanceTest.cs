@@ -25,15 +25,8 @@ public class AcceptanceTest
     [Test]
     public void Base_Scenario()
     {
-        // _service.SendGreetings(new OurDate("2008/10/08"));
-
-        _smtpClientWrapperSpy.When(x => x.SendMessage(Arg.Any<string>(), Arg.Any<string>())).Do(_ =>
-        {
-            Console.WriteLine("patata");
-        });
-        // _smtpClientWrapperSpy.SendMessage(Arg.Any<string>(), Arg.Any<string>());
-        //_smtpClientWrapperSpy.Received(1).SendMessage(Arg.Any<string>(), Arg.Any<string>()).;
-        // _smtpClientWrapperSpy.Received(1).SendMessage("Happy Birthday, dear John!", "john.doe@foobar.com");
+        _service.SendGreetings(new OurDate("2008/10/08"));
+         _smtpClientWrapperSpy.Received(1).SendMessage("Happy Birthday, dear John!", "john.doe@foobar.com");
     }
 
     [Test]

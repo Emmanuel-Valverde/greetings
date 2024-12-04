@@ -18,7 +18,7 @@ public class SmtpClientWrapper : IMessageSender
         };
     }
 
-    public void SendMessage(string body, string recipient)
+    public virtual void SendMessage(string body, string recipient)
     {
         // Construct the message
         var msg = new MailMessage
